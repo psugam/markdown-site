@@ -195,7 +195,7 @@ blockquote {
 }
 
 .home-toc-link:before {
-  content: "📄";
+  content: "";
   position: absolute;
   left: 20px;
   font-size: 1.2em;
@@ -217,7 +217,7 @@ blockquote {
 }
 
 .home-toc-nested .home-toc-link:before {
-  content: "📝";
+  content: "";
   left: 30px;
 }
 

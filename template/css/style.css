@@ -29,6 +29,14 @@ h1, h2{
   text-align: center;
 }
 
+body.dark{
+background-color: black;
+color: white;
+
+}
+body.dark a{
+  color: whitesmoke;
+}
 
 
 
@@ -117,7 +125,7 @@ h1, h2{
 }
 
 .home-toc-link:before {
-  content: "📄";
+  content: "";
   position: absolute;
   left: 20px;
   font-size: 1.2em;
@@ -139,7 +147,7 @@ h1, h2{
 }
 
 .home-toc-nested .home-toc-link:before {
-  content: "📝";
+  content: "";
   left: 30px;
 }
 

@@ -1,23 +1,23 @@
-/* Forest Theme - Light and Dark Mode */
+/* Purple Theme - Light and Dark Mode */
 
 /* Light Mode (Default) */
 body {
-  --bg-primary: #f0fdf4;
-  --bg-secondary: #dcfce7;
-  --bg-code: #d1fae5;
-  --text-primary: #14532d;
-  --text-secondary: #166534;
-  --text-muted: #15803d;
-  --accent: #16a34a;
-  --accent-hover: #15803d;
-  --border: #86efac;
-  --link: #16a34a;
-  --link-hover: #15803d;
-  --heading: #166534;
+  --bg-primary: #faf5ff;
+  --bg-secondary: #f3e8ff;
+  --bg-code: #e9d5ff;
+  --text-primary: #581c87;
+  --text-secondary: #6b21a8;
+  --text-muted: #7e22ce;
+  --accent: #9333ea;
+  --accent-hover: #7e22ce;
+  --border: #c084fc;
+  --link: #9333ea;
+  --link-hover: #7e22ce;
+  --heading: #6b21a8;
   
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: 'Arial', 'Helvetica Neue', sans-serif;
   line-height: 1.7;
   max-width: 900px;
   margin: 0 auto;
@@ -26,18 +26,18 @@ body {
 
 /* Dark Mode */
 body.dark {
-  --bg-primary: #0a1f12;
-  --bg-secondary: #1a3d2b;
-  --bg-code: #0f2419;
-  --text-primary: #bbf7d0;
-  --text-secondary: #86efac;
-  --text-muted: #4ade80;
-  --accent: #22c55e;
-  --accent-hover: #4ade80;
-  --border: #1a3d2b;
-  --link: #4ade80;
-  --link-hover: #86efac;
-  --heading: #86efac;
+  --bg-primary: #1a0b24;
+  --bg-secondary: #2e1d3d;
+  --bg-code: #1f1229;
+  --text-primary: #e9d5ff;
+  --text-secondary: #c084fc;
+  --text-muted: #a855f7;
+  --accent: #a855f7;
+  --accent-hover: #c084fc;
+  --border: #2e1d3d;
+  --link: #c084fc;
+  --link-hover: #e9d5ff;
+  --heading: #c084fc;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -45,7 +45,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-weight: 600;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 h1 { font-size: 2.5rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
@@ -114,7 +113,6 @@ blockquote {
   color: var(--text-muted);
   font-style: italic;
 }
-
 
 
 /* Homepage styles */
@@ -196,7 +194,7 @@ blockquote {
 }
 
 .home-toc-link:before {
-  content: "📄";
+  content: "";
   position: absolute;
   left: 20px;
   font-size: 1.2em;
@@ -218,7 +216,7 @@ blockquote {
 }
 
 .home-toc-nested .home-toc-link:before {
-  content: "📝";
+  content: "";
   left: 30px;
 }
 

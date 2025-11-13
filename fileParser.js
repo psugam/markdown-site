@@ -3,6 +3,7 @@ import path from "path";
 
 import markdownit from "markdown-it";
 import { readFile, writeFile } from "fs/promises";
+import { mkdirSync, copyFileSync } from "fs";
 import hljs from 'highlight.js'
 
 
@@ -210,7 +211,7 @@ async function createCSSFile(outputBase, themeName) {
 // }`;
 
 
-const cssContent= await readFile(`template/${themeName}.css`, "utf-8");
+const cssContent= await readFile(`template/css/${themeName}.css`, "utf-8");
 
   const styleDir = path.join(outputBase, "style");
   const cssPath = path.join(styleDir, "styles.css");
@@ -260,9 +261,10 @@ async function createHomePage(outputBase, htmlFiles){
  <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Documentation Home</title>
+   <title>Markdown Site</title>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
    <link rel="stylesheet" href="style/styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
  </head>
  <body>
    <div class="home-container">
@@ -297,6 +299,19 @@ async function createHomePage(outputBase, htmlFiles){
   console.log(`Homepage created at: ${homePagePath}`);
 }
 
+async function createFaviconFile(outputBase){
+// Define source and destination paths
+const source = path.join("template", "favicon", "favicon.ico");
+const destination = path.join(outputBase, "favicon", "favicon.ico");
+
+// Ensure destination folder exists
+mkdirSync(path.dirname(destination), { recursive: true });
+
+// Copy file
+copyFileSync(source, destination);
+
+console.log("Favicon copied successfully!");
+}
 
 
 export async function renderMarkdownFile( inputFolder="./md-input", inputFileType=".md", outputFolder="site-output", themeName="sunset" ) {
@@ -305,6 +320,8 @@ export async function renderMarkdownFile( inputFolder="./md-input", inputFileTyp
     // const outputFilePath="site-output/html/";
     const outputFilePath=`${outputFolder}/html/`;
 await createCSSFile(outputFolder, themeName);
+await createFaviconFile(outputFolder);
+
 const mdFiles = await getFilesByType(inputFolder, inputFileType);
   const htmlFiles = [];
   for (const file of mdFiles) {
@@ -322,16 +339,21 @@ const relativePath = path.relative(inputFolder, file.fullPath);
 const depth = relativePath.split(path.sep).length;
 const cssRelativePath = '../'.repeat(depth) + 'style/styles.css';
 
+const faviconRelativePath = '../'.repeat(depth) + 'favicon/favicon.ico';
+
+let pageName=file.name.slice(0, -3);
+pageName=pageName.charAt(0).toUpperCase() + pageName.slice(1);
 const fullHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${file.name.slice(0,-3)}</title>
+  <title>${pageName}</title>
   <!-- Highlight.js CSS theme -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
   <!-- Optional: Add some basic styling for the markdown content -->
   <link rel="stylesheet" href="${cssRelativePath}">
+   <link rel="icon" type="image/x-icon" href="${faviconRelativePath}">
 </head>
 <body>
   <button class="toggle-btn" onclick="document.body.classList.toggle('dark')">

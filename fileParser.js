@@ -334,10 +334,14 @@ const fullHTML = `<!DOCTYPE html>
   <link rel="stylesheet" href="${cssRelativePath}">
 </head>
 <body>
+  <button class="toggle-btn" onclick="document.body.classList.toggle('dark')">
+    <span class="sun">☀️</span>
+    <span class="moon">🌙</span>
+  </button>
+   <a href="/site-output/index.html">Home</a> 
+</div>
   ${result}
-  <br>
-  <br>
-  <a href="/site-output/index.html">Home</a> 
+ 
 </body>
 </html>`
 const htmlFileName = file.name.slice(0, -3)+".html";

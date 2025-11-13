@@ -149,3 +149,42 @@ h1, h2{
   padding: 20px;
   color: #718096;
   font-size: 0.9em;}
+
+
+
+  
+/* for the dark mode  */
+/* for the dark mode  */
+  .toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+        padding-top: auto;
+        padding-bottom: auto;
+        padding-left: 0.75rem;
+        /* padding-right: 1.25rem; */
+    width: 3rem;
+    height: 3rem;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #e0e0e0;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .toggle-btn:hover {
+    background: #ccc;
+  }
+
+  body.dark .toggle-btn {
+    background: #333;
+    color: #f5f5f5;
+  }
+
+  /* Optional icon look */
+  .sun, .moon {
+    font-size: 1.2rem;
+  }
+
+  body.dark .sun { display: none; }
+  body:not(.dark) .moon { display: none; }

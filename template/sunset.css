@@ -1,0 +1,115 @@
+/* Sunset Theme - Light and Dark Mode */
+
+/* Light Mode (Default) */
+body {
+  --bg-primary: #fff7ed;
+  --bg-secondary: #ffedd5;
+  --bg-code: #fed7aa;
+  --text-primary: #7c2d12;
+  --text-secondary: #9a3412;
+  --text-muted: #c2410c;
+  --accent: #ea580c;
+  --accent-hover: #c2410c;
+  --border: #fdba74;
+  --link: #ea580c;
+  --link-hover: #c2410c;
+  --heading: #9a3412;
+  
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
+  line-height: 1.7;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Dark Mode */
+body.dark {
+  --bg-primary: #1c0f08;
+  --bg-secondary: #3d1f11;
+  --bg-code: #2d1409;
+  --text-primary: #fed7aa;
+  --text-secondary: #fdba74;
+  --text-muted: #fb923c;
+  --accent: #f97316;
+  --accent-hover: #fb923c;
+  --border: #3d1f11;
+  --link: #fb923c;
+  --link-hover: #fdba74;
+  --heading: #fdba74;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+h1 { font-size: 2.5rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
+h2 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 0.4rem; }
+h3 { font-size: 1.5rem; }
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+code {
+  background-color: var(--bg-code);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+ul, ol {
+  color: var(--text-secondary);
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+li {
+  margin: 0.5rem 0;
+}
+
+strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 2rem 0;
+}
+
+blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}

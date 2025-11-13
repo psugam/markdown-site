@@ -1,0 +1,115 @@
+/* Purple Theme - Light and Dark Mode */
+
+/* Light Mode (Default) */
+body {
+  --bg-primary: #faf5ff;
+  --bg-secondary: #f3e8ff;
+  --bg-code: #e9d5ff;
+  --text-primary: #581c87;
+  --text-secondary: #6b21a8;
+  --text-muted: #7e22ce;
+  --accent: #9333ea;
+  --accent-hover: #7e22ce;
+  --border: #c084fc;
+  --link: #9333ea;
+  --link-hover: #7e22ce;
+  --heading: #6b21a8;
+  
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Arial', 'Helvetica Neue', sans-serif;
+  line-height: 1.7;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Dark Mode */
+body.dark {
+  --bg-primary: #1a0b24;
+  --bg-secondary: #2e1d3d;
+  --bg-code: #1f1229;
+  --text-primary: #e9d5ff;
+  --text-secondary: #c084fc;
+  --text-muted: #a855f7;
+  --accent: #a855f7;
+  --accent-hover: #c084fc;
+  --border: #2e1d3d;
+  --link: #c084fc;
+  --link-hover: #e9d5ff;
+  --heading: #c084fc;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+h1 { font-size: 2.5rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
+h2 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 0.4rem; }
+h3 { font-size: 1.5rem; }
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+code {
+  background-color: var(--bg-code);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+ul, ol {
+  color: var(--text-secondary);
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+li {
+  margin: 0.5rem 0;
+}
+
+strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 2rem 0;
+}
+
+blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}

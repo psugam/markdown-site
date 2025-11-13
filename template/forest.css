@@ -1,0 +1,116 @@
+/* Forest Theme - Light and Dark Mode */
+
+/* Light Mode (Default) */
+body {
+  --bg-primary: #f0fdf4;
+  --bg-secondary: #dcfce7;
+  --bg-code: #d1fae5;
+  --text-primary: #14532d;
+  --text-secondary: #166534;
+  --text-muted: #15803d;
+  --accent: #16a34a;
+  --accent-hover: #15803d;
+  --border: #86efac;
+  --link: #16a34a;
+  --link-hover: #15803d;
+  --heading: #166534;
+  
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Georgia', 'Times New Roman', serif;
+  line-height: 1.7;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Dark Mode */
+body.dark {
+  --bg-primary: #0a1f12;
+  --bg-secondary: #1a3d2b;
+  --bg-code: #0f2419;
+  --text-primary: #bbf7d0;
+  --text-secondary: #86efac;
+  --text-muted: #4ade80;
+  --accent: #22c55e;
+  --accent-hover: #4ade80;
+  --border: #1a3d2b;
+  --link: #4ade80;
+  --link-hover: #86efac;
+  --heading: #86efac;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1 { font-size: 2.5rem; border-bottom: 3px solid var(--accent); padding-bottom: 0.5rem; }
+h2 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 0.4rem; }
+h3 { font-size: 1.5rem; }
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+code {
+  background-color: var(--bg-code);
+  color: var(--text-secondary);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+ul, ol {
+  color: var(--text-secondary);
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+li {
+  margin: 0.5rem 0;
+}
+
+strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid var(--border);
+  margin: 2rem 0;
+}
+
+blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}

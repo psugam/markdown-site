@@ -1,4 +1,4 @@
-console.time('siteRendering');
+console.time("Execution-Time");
 import fs from "fs/promises";
 import path from "path";
 
@@ -148,6 +148,14 @@ async function createHomePage(outputBase, htmlFiles){
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
    <link rel="stylesheet" href="style/styles.css">
     <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+    <style>
+    body{
+    border:none;
+    }
+    h1, h2, h3, h4, h5, h6{
+    text-decoration:none;
+    }
+    </style>
  </head>
  <body>
    <div class="home-container">
@@ -177,7 +185,7 @@ async function createHomePage(outputBase, htmlFiles){
   console.log(`Homepage created at: ${homePagePath}`);
 }
 
-async function createIndividualPage(file, inputFolder, outputFilePath, markdownContent) {
+async function createIndividualPage(file, inputFolder, outputFilePath, markdownContent, allMdFiles) {
   // Render markdown to HTML
   const result = md.render(markdownContent);
 
@@ -192,6 +200,54 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
   let pageName = file.name.slice(0, -3);
   pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
   
+  // Generate table of contents for all pages
+  let tocHTML = `<div class="table-of-pages-header">
+    <h3 class="toggle-pages-btn" onclick="toggleTableOfPages()"> Pages</h3>
+  </div>
+  <div class="table-of-pages hidden">
+    
+    <!-- <h3>All Pages</h3>  -->
+    <ul>`;
+  
+  // Group files by directory
+  const filesByDir = {};
+  allMdFiles.forEach(mdFile => {
+    const relPath = path.relative(inputFolder, mdFile.fullPath);
+    const dir = path.dirname(relPath);
+    if (!filesByDir[dir]) {
+      filesByDir[dir] = [];
+    }
+    filesByDir[dir].push({
+      name: mdFile.name.slice(0, -3),
+      path: relPath.slice(0, -3) + '.html'
+    });
+  });
+  
+  // Generate nested list
+  Object.keys(filesByDir).sort().forEach(dir => {
+    if (dir !== '.') {
+      tocHTML += `<li><strong>${dir.charAt(0).toUpperCase() + dir.slice(1)}</strong><ul>`;
+    }
+    
+    filesByDir[dir].sort((a, b) => a.name.localeCompare(b.name)).forEach(pageFile => {
+      const currentPath = file.fullPath.slice(0, -3) + '.html';
+      const targetPath = path.join(inputFolder, pageFile.path);
+      const relativeLink = path.relative(path.dirname(currentPath), targetPath).replace(/\\/g, '/');
+      
+      const displayName = pageFile.name.charAt(0).toUpperCase() + pageFile.name.slice(1);
+      const isCurrentPage = pageFile.path === path.relative(inputFolder, file.fullPath).slice(0, -3) + '.html';
+      const activeClass = isCurrentPage ? ' class="active"' : '';
+      
+      tocHTML += `<li${activeClass}><a href="${relativeLink}"${activeClass}>${displayName}</a></li>`;
+    });
+    
+    if (dir !== '.') {
+      tocHTML += '</ul></li>';
+    }
+  });
+  
+  tocHTML += '</ul></div>';
+  
   const fullHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -203,16 +259,18 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
   <!-- Optional: Add some basic styling for the markdown content -->
   <link rel="stylesheet" href="${cssRelativePath}">
    <link rel="icon" type="image/x-icon" href="${faviconRelativePath}">
-</head>
+   </head>
+
 <body>
+<div class="body-main-container">
   <button class="toggle-btn" onclick="handleDarkModeToggle()">
     <span class="sun">☀️</span>
     <span class="moon">🌙</span>
   </button>
    <a href="/site-output/index.html">Home</a> 
-</div>
+  ${tocHTML}
   ${result}
- 
+ </div>
 </body>
 <script src="${jsRelativePath}"></script>
 </html>`;
@@ -265,8 +323,8 @@ async function createFaviconFile(outputBase){
 }
 
 
-async function createJSFile(outputBase){
-  const source = path.join("template", "js", "index.js");
+async function createJSFile(outputBase) {
+   const source = path.join("template", "js", "index.js");
   const destination = path.join(outputBase, "js", "index.js");
 
   // if not subfolder exist 
@@ -274,7 +332,6 @@ async function createJSFile(outputBase){
   copyFileSync(source, destination);
   console.log("JS file copied successfully!");
 }
-
 
 
 
@@ -296,7 +353,7 @@ export async function renderMarkdownFile( inputFolder="./md-input", inputFileTyp
       console.log("File:", file.name, "Path:", file.fullPath);
       const markdownContent = await readFile(file.fullPath, "utf-8");
       
-      const htmlFile = await createIndividualPage(file, inputFolder, outputFilePath, markdownContent);
+      const htmlFile = await createIndividualPage(file, inputFolder, outputFilePath, markdownContent, mdFiles);
       htmlFiles.push(htmlFile);
     }
 
@@ -308,4 +365,5 @@ export async function renderMarkdownFile( inputFolder="./md-input", inputFileTyp
 
 
 
-console.timeEnd('siteRendering');
+
+console.timeEnd('Execution-Time');

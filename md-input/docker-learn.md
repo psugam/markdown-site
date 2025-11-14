@@ -1,6 +1,4 @@
 # Complete Docker Guide for Beginners
-
-## Table of Contents
 [[toc]]
 
 ## Introduction to Docker {#Sugam}

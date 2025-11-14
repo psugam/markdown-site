@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', function () {
     newTOC.onclick = handleTocToggle();
     // not including () here was causing twice click issue
 
+
+
+// the page list is default hidden this sis a temp solution
+    const tableOfPages = document.querySelector('.table-of-pages');
+    tableOfPages.classList.remove('hidden');
+
+
 });
 // for toggle
 
@@ -41,3 +48,21 @@ function handleTocToggle() {
         toc.classList.toggle('hidden');
     });
 }
+// this seems redundant lol. Change
+
+
+
+
+
+
+
+
+
+// pages toggle
+  function toggleTableOfPages() {
+    const tableOfPages = document.querySelector('.table-of-pages');
+    tableOfPages.classList.toggle('hidden');
+  }
+
+
+  

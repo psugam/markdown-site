@@ -315,6 +315,19 @@ console.log("Favicon copied successfully!");
 }
 
 
+async function createJSFile(outputBase){
+const source = path.join("template", "js", "index.js");
+const destination = path.join(outputBase, "js", "index.js");
+
+// if not subfolder exist 
+mkdirSync(path.dirname(destination), { recursive: true });
+copyFileSync(source, destination);
+console.log("JS file copied successfully!");
+
+}
+
+
+
 export async function renderMarkdownFile( inputFolder="./md-input", inputFileType=".md", outputFolder="site-output", themeName="sunset" ) {
   try {
     // Read the markdown file
@@ -322,6 +335,7 @@ export async function renderMarkdownFile( inputFolder="./md-input", inputFileTyp
     const outputFilePath=`${outputFolder}/html/`;
 await createCSSFile(outputFolder, themeName);
 await createFaviconFile(outputFolder);
+await createJSFile(outputFolder);
 
 const mdFiles = await getFilesByType(inputFolder, inputFileType);
   const htmlFiles = [];
@@ -341,6 +355,7 @@ const depth = relativePath.split(path.sep).length;
 const cssRelativePath = '../'.repeat(depth) + 'style/styles.css';
 
 const faviconRelativePath = '../'.repeat(depth) + 'favicon/favicon.ico';
+const jsRelativePath = '../'.repeat(depth) + 'js/index.js';
 
 let pageName=file.name.slice(0, -3);
 pageName=pageName.charAt(0).toUpperCase() + pageName.slice(1);
@@ -357,7 +372,7 @@ const fullHTML = `<!DOCTYPE html>
    <link rel="icon" type="image/x-icon" href="${faviconRelativePath}">
 </head>
 <body>
-  <button class="toggle-btn" onclick="document.body.classList.toggle('dark')">
+  <button class="toggle-btn" onclick="handleDarkModeToggle()">
     <span class="sun">☀️</span>
     <span class="moon">🌙</span>
   </button>
@@ -366,6 +381,7 @@ const fullHTML = `<!DOCTYPE html>
   ${result}
  
 </body>
+<script src="${jsRelativePath}"></script>
 </html>`
 const htmlFileName = file.name.slice(0, -3)+".html";
 file.name = htmlFileName; //change extension to .html

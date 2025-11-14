@@ -30,12 +30,12 @@ h1, h2{
 }
 
 body.dark{
-background-color: black;
+background-color: #333333;
 color: white;
 
 }
 body.dark a{
-  color: whitesmoke;
+  color: rgb(190, 170, 170);
 }
 
 

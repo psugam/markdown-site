@@ -2,6 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 
 import markdownit from "markdown-it";
+import markdownitFootnote from "markdown-it-footnote";
 import { readFile, writeFile } from "fs/promises";
 import { mkdirSync, copyFileSync } from "fs";
 import hljs from 'highlight.js'
@@ -21,7 +22,7 @@ const md = markdownit({
     }
     return '' // use external default escaping
   }
-})
+}).use(markdownitFootnote);
 
 
 

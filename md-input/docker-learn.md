@@ -1,21 +1,9 @@
 # Complete Docker Guide for Beginners
 
 ## Table of Contents
-1. [Introduction to Docker](#introduction-to-docker)
-2. [Setting Up Your Environment](#setting-up-your-environment)
-3. [Docker Fundamentals](#docker-fundamentals)
-4. [Basic Docker Commands](#basic-docker-commands)
-5. [Creating Dockerfiles](#creating-dockerfiles)
-6. [Docker Compose](#docker-compose)
-7. [MERN Stack with Docker](#mern-stack-with-docker)
-8. [Python Applications with Docker](#python-applications-with-docker)
-9. [Hugo Static Sites with Docker](#hugo-static-sites-with-docker)
-10. [Best Practices](#best-practices)
-11. [Troubleshooting](#troubleshooting)
+[[toc]]
 
----
-
-## Introduction to Docker
+## Introduction to Docker {#Sugam}
 
 Docker is a platform that allows you to package applications and their dependencies into containers that can run anywhere.
 

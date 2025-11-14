@@ -1,14 +1,20 @@
+console.time('siteRendering');
 import fs from "fs/promises";
 import path from "path";
 
 import markdownit from "markdown-it";
 import markdownitFootnote from "markdown-it-footnote";
+
+import MarkdownItTOC from 'markdown-it-table-of-contents';
+import MarkdownItAnchor from 'markdown-it-anchor';
+import markdownItAttrs from 'markdown-it-attrs';
+
 import { readFile, writeFile } from "fs/promises";
 import { mkdirSync, copyFileSync } from "fs";
 import hljs from 'highlight.js'
 
 
-
+// using markdown it and various plugins
 
 const md = markdownit({
   html: true,
@@ -25,17 +31,27 @@ const md = markdownit({
 }).use(markdownitFootnote);
 
 
+md.use(markdownItAttrs, {
+  // optional, these are default options
+  leftDelimiter: '{',
+  rightDelimiter: '}',
+  allowedAttributes: []  // empty array = all attributes are allowed
+});
+
+md.use(MarkdownItAnchor.default); // Optional, but makes sense as you really want to link to something, see info about recommended plugins below
+md.use(MarkdownItTOC,{
+  "includeLevel":[1, 2, 3]}
+);
+
+
+
+// just copy from respecitive documentations 
+// options in use should be in json
 
 
 
 
 
-/**
- * Recursively get all files of a specific extension
- * @param {string} dirPath - folder to search
- * @param {string} ext - file extension, e.g. '.md'
- * @returns {Promise<{name: string, fullPath: string}[]>}
- */
 async function getFilesByType(dirPath, ext) {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
   const files = [];
@@ -75,144 +91,7 @@ async function getFilesByType(dirPath, ext) {
 
 // Add this function before renderMarkdownFile()
 async function createCSSFile(outputBase, themeName) {
-//   const cssContent = `body {
-//   max-width: 800px;
-//   margin: 40px auto;
-//   padding: 0 20px;
-//   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-//   line-height: 1.6;
-//   color: #333;
-// }
-// code {
-//   background-color: #f4f4f4;
-//   padding: 2px 6px;
-//   border-radius: 3px;
-//   font-family: 'Courier New', monospace;
-// }
-// pre {
-//   border-radius: 5px;
-//   padding: 15px;
-// }
-// pre code {
-//   background: none;
-//   padding: 0;
-// }
-
-// /* Homepage styles */
-// .home-container {
-//   max-width: 1000px;
-//   margin: 0 auto;
-//   padding: 40px 20px;
-// }
-
-// .home-header {
-//   text-align: center;
-//   margin-bottom: 60px;
-//   padding: 40px 20px;
-//   background: linear-gradient(135deg, #29292aff 0%, #d6d3d9ff 100%);
-//   color: white;
-//   border-radius: 12px;
-//   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-// }
-
-// .home-title {
-//   font-size: 3em;
-//   margin: 0 0 10px 0;
-//   font-weight: 700;
-// }
-
-// .home-subtitle {
-//   font-size: 1.2em;
-//   opacity: 0.95;
-//   margin: 0;
-// }
-
-// .home-toc {
-//   background: white;
-//   border-radius: 12px;
-//   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-//   overflow: hidden;
-// }
-
-// .home-toc-header {
-//   background: #f8f9fa;
-//   padding: 20px 30px;
-//   border-bottom: 2px solid #e9ecef;
-// }
-
-// .home-toc-title {
-//   margin: 0;
-//   font-size: 1.8em;
-//   color: #2d3748;
-// }
-
-// .home-toc-list {
-//   list-style: none;
-//   padding: 0;
-//   margin: 0;
-// }
-
-// .home-toc-item {
-//   border-bottom: 1px solid #e9ecef;
-//   transition: background-color 0.2s ease;
-// }
-
-// .home-toc-item:last-child {
-//   border-bottom: none;
-// }
-
-// .home-toc-item:hover {
-//   background-color: #f8f9fa;
-// }
-
-// .home-toc-link {
-//   display: block;
-//   padding: 18px 30px;
-//   color: #4a5568;
-//   text-decoration: none;
-//   font-size: 1.1em;
-//   transition: all 0.2s ease;
-//   position: relative;
-//   padding-left: 50px;
-// }
-
-// .home-toc-link:before {
-//   content: "📄";
-//   position: absolute;
-//   left: 20px;
-//   font-size: 1.2em;
-// }
-
-// .home-toc-link:hover {
-//   color: #667eea;
-//   padding-left: 55px;
-// }
-
-// .home-toc-nested {
-//   padding-left: 20px;
-//   background-color: #f8f9fa;
-// }
-
-// .home-toc-nested .home-toc-link {
-//   padding-left: 60px;
-//   font-size: 1em;
-// }
-
-// .home-toc-nested .home-toc-link:before {
-//   content: "📝";
-//   left: 30px;
-// }
-
-// .home-footer {
-//   text-align: center;
-//   margin-top: 60px;
-//   padding: 20px;
-//   color: #718096;
-//   font-size: 0.9em;
-// }`;
-
-
-const cssContent= await readFile(`template/css/${themeName}.css`, "utf-8");
+  const cssContent= await readFile(`template/css/${themeName}.css`, "utf-8");
 
   const styleDir = path.join(outputBase, "style");
   const cssPath = path.join(styleDir, "styles.css");
@@ -244,12 +123,15 @@ async function createHomePage(outputBase, htmlFiles){
   // Generate nested list
   Object.keys(filesByDir).sort().forEach(dir => {
     if (dir !== '.') {
-      tocHTML += `<li class="home-toc-item"><strong style="padding: 18px 30px; display: block; color: #2d3748;"> ${dir}</strong>`;
+
+      tocHTML += `<li class="home-toc-item"><strong style="padding: 18px 30px; display: block; color: #2d3748;">${dir.charAt(0).toUpperCase()+dir.slice(1)}</strong>`;
       tocHTML += '<ul class="home-toc-list home-toc-nested">';
     }
     
     filesByDir[dir].sort((a, b) => a.name.localeCompare(b.name)).forEach(file => {
-      tocHTML += `<li class="home-toc-item"><a href="html/${file.path}" class="home-toc-link">${file.name.replace('.html', '')}</a></li>`;
+      file.name=file.name.replace(".html", "");
+      file.name=file.name.charAt(0).toUpperCase() + file.name.slice(1);
+      tocHTML += `<li class="home-toc-item"><a href="html/${file.path}" class="home-toc-link">${file.name}</a></li>`;
     });
     
     if (dir !== '.') {
@@ -290,76 +172,27 @@ async function createHomePage(outputBase, htmlFiles){
  </body>
  </html>`;
 
-
-
-
-
-
   const homePagePath = path.join(outputBase, "index.html");
   await writeFile(homePagePath, homePageContent, "utf-8");
   console.log(`Homepage created at: ${homePagePath}`);
 }
 
-async function createFaviconFile(outputBase){
-// Define source and destination paths
-const source = path.join("template", "favicon", "favicon.ico");
-const destination = path.join(outputBase, "favicon", "favicon.ico");
+async function createIndividualPage(file, inputFolder, outputFilePath, markdownContent) {
+  // Render markdown to HTML
+  const result = md.render(markdownContent);
 
-// Ensure destination folder exists
-mkdirSync(path.dirname(destination), { recursive: true });
+  // Calculate relative path from HTML file to CSS file
+  const relativePath = path.relative(inputFolder, file.fullPath);
+  const depth = relativePath.split(path.sep).length;
+  const cssRelativePath = '../'.repeat(depth) + 'style/styles.css';
 
-// Copy file
-copyFileSync(source, destination);
+  const faviconRelativePath = '../'.repeat(depth) + 'favicon/favicon.ico';
+  const jsRelativePath = '../'.repeat(depth) + 'js/index.js';
 
-console.log("Favicon copied successfully!");
-}
-
-
-async function createJSFile(outputBase){
-const source = path.join("template", "js", "index.js");
-const destination = path.join(outputBase, "js", "index.js");
-
-// if not subfolder exist 
-mkdirSync(path.dirname(destination), { recursive: true });
-copyFileSync(source, destination);
-console.log("JS file copied successfully!");
-
-}
-
-
-
-export async function renderMarkdownFile( inputFolder="./md-input", inputFileType=".md", outputFolder="site-output", themeName="sunset" ) {
-  try {
-    // Read the markdown file
-    // const outputFilePath="site-output/html/";
-    const outputFilePath=`${outputFolder}/html/`;
-await createCSSFile(outputFolder, themeName);
-await createFaviconFile(outputFolder);
-await createJSFile(outputFolder);
-
-const mdFiles = await getFilesByType(inputFolder, inputFileType);
-  const htmlFiles = [];
-  for (const file of mdFiles) {
-    console.log("File:", file.name, "Path:", file.fullPath);
-    const markdownContent = await readFile(file.fullPath, "utf-8");
-        // Render it
-    const result = md.render(markdownContent);
-    // const relativePath=file.fullPath.replace(inputFolder.slice(2),"").slice(1).replace(file.name, "")//normalize to forward slashes
-    // console.log(`The realtive path after removing ${inputFolder.slice(2)} is:`, relativePath)
-    // console.log("The result is coming for file: ", file.name);
-
-
-// Calculate relative path from HTML file to CSS file
-const relativePath = path.relative(inputFolder, file.fullPath);
-const depth = relativePath.split(path.sep).length;
-const cssRelativePath = '../'.repeat(depth) + 'style/styles.css';
-
-const faviconRelativePath = '../'.repeat(depth) + 'favicon/favicon.ico';
-const jsRelativePath = '../'.repeat(depth) + 'js/index.js';
-
-let pageName=file.name.slice(0, -3);
-pageName=pageName.charAt(0).toUpperCase() + pageName.slice(1);
-const fullHTML = `<!DOCTYPE html>
+  let pageName = file.name.slice(0, -3);
+  pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+  
+  const fullHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -382,41 +215,90 @@ const fullHTML = `<!DOCTYPE html>
  
 </body>
 <script src="${jsRelativePath}"></script>
-</html>`
-const htmlFileName = file.name.slice(0, -3)+".html";
-file.name = htmlFileName; //change extension to .html
-    // writeFile(`${outputFilePath}${file.name}`, fullHTML, "utf-8");
+</html>`;
 
-      async function copyFilePreserveStructure(inputPath, inputBase, outputBase) {
-                          // 1️⃣ Get the relative path from the base input folder
-                          const relativePath = path.relative(inputBase, inputPath);
-                          // e.g. "subfolder/johnny.md"
+  const htmlFileName = file.name.slice(0, -3) + ".html";
+  file.name = htmlFileName; // change extension to .html
 
-                          // 2️⃣ Compute the full output path
-                          const outputPath = path.join(outputBase, relativePath);
-                          const outputDir = path.dirname(outputPath);
+  async function copyFilePreserveStructure(inputPath, inputBase, outputBase) {
+    // 1️⃣ Get the relative path from the base input folder
+    const relativePath = path.relative(inputBase, inputPath);
+    // e.g. "subfolder/johnny.md"
 
-                          // 3️⃣ Ensure the output folder exists
-                          await fs.mkdir(outputDir, { recursive: true });
+    // 2️⃣ Compute the full output path
+    const outputPath = path.join(outputBase, relativePath);
+    const outputDir = path.dirname(outputPath);
 
-                          // 4️⃣ For demonstration: you could copy, or write new content
-                          // Here we just copy the file
-                          // const content = await fs.readFile(inputPath, "utf-8");
-                          await fs.writeFile(outputPath, fullHTML, "utf-8");
+    // 3️⃣ Ensure the output folder exists
+    await fs.mkdir(outputDir, { recursive: true });
 
-                          console.log(`File written to: ${outputPath}`);
-                          return outputPath;
+    // 4️⃣ For demonstration: you could copy, or write new content
+    // Here we just copy the file
+    // const content = await fs.readFile(inputPath, "utf-8");
+    await fs.writeFile(outputPath, fullHTML, "utf-8");
+
+    console.log(`File written to: ${outputPath}`);
+    return outputPath;
+  }
+
+  const outputPath = await copyFilePreserveStructure(
+    file.fullPath.slice(0, -3) + ".html",
+    inputFolder,
+    outputFilePath
+  );
+
+  return { name: htmlFileName, fullPath: outputPath };
 }
 
-const outputPath = await copyFilePreserveStructure(file.fullPath.slice(0, -3)+".html", inputFolder, outputFilePath);
-htmlFiles.push({ name: htmlFileName, fullPath: outputPath });
+async function createFaviconFile(outputBase){
+  // Define source and destination paths
+  const source = path.join("template", "favicon", "favicon.ico");
+  const destination = path.join(outputBase, "favicon", "favicon.ico");
+
+  // Ensure destination folder exists
+  mkdirSync(path.dirname(destination), { recursive: true });
+
+  // Copy file
+  copyFileSync(source, destination);
+
+  console.log("Favicon copied successfully!");
+}
+
+
+async function createJSFile(outputBase){
+  const source = path.join("template", "js", "index.js");
+  const destination = path.join(outputBase, "js", "index.js");
+
+  // if not subfolder exist 
+  mkdirSync(path.dirname(destination), { recursive: true });
+  copyFileSync(source, destination);
+  console.log("JS file copied successfully!");
+}
 
 
 
 
 
 
-  }
+export async function renderMarkdownFile( inputFolder="./md-input", inputFileType=".md", outputFolder="site-output", themeName="sunset" ) {
+  try {
+    // Read the markdown file
+    const outputFilePath = `${outputFolder}/html/`;
+    
+    await createCSSFile(outputFolder, themeName);
+    await createFaviconFile(outputFolder);
+    await createJSFile(outputFolder);
+
+    const mdFiles = await getFilesByType(inputFolder, inputFileType);
+    const htmlFiles = [];
+    
+    for (const file of mdFiles) {
+      console.log("File:", file.name, "Path:", file.fullPath);
+      const markdownContent = await readFile(file.fullPath, "utf-8");
+      
+      const htmlFile = await createIndividualPage(file, inputFolder, outputFilePath, markdownContent);
+      htmlFiles.push(htmlFile);
+    }
 
     await createHomePage(outputFolder, htmlFiles);
   } catch (error) {
@@ -425,3 +307,5 @@ htmlFiles.push({ name: htmlFileName, fullPath: outputPath });
 }
 
 
+
+console.timeEnd('siteRendering');

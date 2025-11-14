@@ -19,9 +19,13 @@ body {
   color: var(--text-primary);
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', sans-serif;
   line-height: 1.7;
-  max-width: 900px;
+  width: 50%;
+  max-width: 900px !important;
   margin: 0 auto;
   padding: 2rem;
+  border: 2px solid green;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* Dark Mode */
@@ -266,3 +270,83 @@ blockquote {
 
   body.dark .sun { display: none; }
   body:not(.dark) .moon { display: none; }
+
+
+
+
+
+
+
+  /* table of contents */
+  /* .table-of-contents{
+    position: absolute;
+    right: 10px;
+    border: 2px solid black;
+  }
+.hidden{
+
+  display: none;
+}
+  .table-of-contents ul{
+    list-style: none;
+  }
+
+  body.dark .table-of-contents{
+    border: 2px solid white;
+  } */
+
+
+  /* table of contents */
+.table-of-contents {
+  position: relative;
+  border: 2px solid black;
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.table-of-contents ul {
+  list-style: none;
+  text-align: left;
+}
+
+body.dark .table-of-contents {
+  border: 2px solid white;
+}
+
+/* Large devices */
+@media (min-width: 1426px) {
+  .table-of-contents {
+    position: fixed;
+    right: 20px;
+    top: 5rem;
+    width: 300px;
+    max-height: 85vh;
+    overflow-y: auto;
+  /* transform: translateY(-50%); */
+  }
+  .table-of-contents-header{
+    position: fixed;
+  right: 14rem;
+  top: 0px;
+  }
+  /* Chrome, Edge, Safari */
+.table-of-contents::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-of-contents::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table-of-contents::-webkit-scrollbar-thumb {
+  background: #999a;
+  border-radius: 10px;
+}
+
+.table-of-contents::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+}

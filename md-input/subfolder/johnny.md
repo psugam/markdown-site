@@ -1,5 +1,6 @@
 An h1 header
 ============
+[[toc]]
 
 Paragraphs are separated by a blank line.
 

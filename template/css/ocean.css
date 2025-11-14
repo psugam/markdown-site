@@ -265,3 +265,19 @@ blockquote {
 
   body.dark .sun { display: none; }
   body:not(.dark) .moon { display: none; }
+
+
+
+
+  /* table of contents */
+  .table-of-contents{
+    border: 2px solid black;
+  }
+
+  .table-of-contents ul{
+    list-style: none;
+  }
+
+  body.dark .table-of-contents{
+    border: 2px solid white;
+  }

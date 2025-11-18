@@ -14,6 +14,8 @@ body {
   --link: #ea580c;
   --link-hover: #c2410c;
   --heading: #9a3412;
+
+  --navbar-height: 5rem;
   
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -290,14 +292,19 @@ body:not(.dark) .moon { display: none; }
   text-align: left;
 }
 
-body.dark .table-of-contents {
-}
 
+@media (max-width: 1426px){
+
+   .body-main-container{
+    width: 80%;
+  }
+}
 /* Large devices */
 @media (min-width: 1426px) {
-  .table-of-contents {
+
+  /* .table-of-contents {
     position: fixed;
-    right: 20px;
+    left: 20px;
     top: 5rem;
     width: 300px;
     max-height: 85vh;
@@ -306,8 +313,25 @@ body.dark .table-of-contents {
   
   .table-of-contents-header {
     position: fixed;
-    right: 14rem;
+    left: 2rem;
     top: 0px;
+  } */
+  
+  .table-of-contents-header {
+margin-top: 0;
+  }
+
+  
+  .toc-wrapper{
+     position: fixed;
+    left: 20px;
+    margin-top: 2rem;
+    /* top: 5rem; */
+    top: calc(var(--navbar-height));
+    width: 300px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 2px solid brown;
   }
   
   /* Chrome, Edge, Safari */
@@ -329,71 +353,29 @@ body.dark .table-of-contents {
   }
 }
 
-/* TABLE OF PAGES */
-.table-of-pages {
-  position: fixed;
-  margin-bottom: 20px;
-}
-
-.hidden {
-  display: none;
-}
-
-.table-of-pages ul {
-  list-style: none;
-  text-align: left;
-}
-
-body.dark .table-of-pages {
-}
-
-@media (min-width: 1426px) {
-  .table-of-pages {
-    position: fixed;
-    left: 20px;
-    top: 5rem;
-    width: 300px;
-    max-height: 85vh;
-    overflow-y: auto;
-  }
-  
-  .table-of-pages-header {
-    position: fixed;
-    left: 14rem;
-    top: 0px;
-  }
-  
-  .toggle-pages-btn {
-    position: fixed;
-    left: 20px;
-  }
-
-  /* Chrome, Edge, Safari */
-  .table-of-pages::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .table-of-pages::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .table-of-pages::-webkit-scrollbar-thumb {
-    background: #999a;
-    border-radius: 10px;
-  }
-
-  .table-of-pages::-webkit-scrollbar-thumb:hover {
-    background: #777;
-  }
-}
 
 
 
+/* .navbar{
+height: var(--navbar-height);
+  border: 2px solid red;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: sticky;
+  top: 0;
+} */
 
-/* hello div */
-.hello-div{
-  width: 100%;
-  border: 2px solid blue;
-  height: 2rem;
-  display: block;
+
+.navbar {
+  height: var(--navbar-height);
+  border: 2px solid red;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: sticky;
+  top: 0;
+  z-index: 1000; 
 }

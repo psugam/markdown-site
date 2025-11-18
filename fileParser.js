@@ -201,14 +201,6 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
   pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
   
   // Generate table of contents for all pages
-  let tocHTML = `<div class="table-of-pages-header">
-    <h3 class="toggle-pages-btn" onclick="toggleTableOfPages()"> Pages</h3>
-  </div>
-  <div class="table-of-pages hidden">
-    
-    <!-- <h3>All Pages</h3>  -->
-    <ul>`;
-  
   // Group files by directory
   const filesByDir = {};
   allMdFiles.forEach(mdFile => {
@@ -223,30 +215,7 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
     });
   });
   
-  // Generate nested list
-  Object.keys(filesByDir).sort().forEach(dir => {
-    if (dir !== '.') {
-      tocHTML += `<li><strong>${dir.charAt(0).toUpperCase() + dir.slice(1)}</strong><ul>`;
-    }
-    
-    filesByDir[dir].sort((a, b) => a.name.localeCompare(b.name)).forEach(pageFile => {
-      const currentPath = file.fullPath.slice(0, -3) + '.html';
-      const targetPath = path.join(inputFolder, pageFile.path);
-      const relativeLink = path.relative(path.dirname(currentPath), targetPath).replace(/\\/g, '/');
-      
-      const displayName = pageFile.name.charAt(0).toUpperCase() + pageFile.name.slice(1);
-      const isCurrentPage = pageFile.path === path.relative(inputFolder, file.fullPath).slice(0, -3) + '.html';
-      const activeClass = isCurrentPage ? ' class="active"' : '';
-      
-      tocHTML += `<li${activeClass}><a href="${relativeLink}"${activeClass}>${displayName}</a></li>`;
-    });
-    
-    if (dir !== '.') {
-      tocHTML += '</ul></li>';
-    }
-  });
-  
-  tocHTML += '</ul></div>';
+
   
   const fullHTML = `<!DOCTYPE html>
 <html lang="en">
@@ -262,13 +231,15 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
    </head>
 
 <body>
-<div class="body-main-container">
+<div class="navbar">
   <button class="toggle-btn" onclick="handleDarkModeToggle()">
     <span class="sun">☀️</span>
     <span class="moon">🌙</span>
   </button>
    <a href="/site-output/index.html">Home</a> 
-  ${tocHTML}
+</div>
+<div class="body-main-container">
+
   ${result}
  </div>
 </body>

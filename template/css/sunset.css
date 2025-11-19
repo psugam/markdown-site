@@ -48,8 +48,10 @@ body.dark {
   max-width: 900px !important;
   margin: 0 auto;
   padding: 2rem;
-  border: 2px solid green;
-  margin-top: 2rem;
+  /* border: 2px solid green; */
+  /* margin-top: 2rem; */
+  margin-top: 0;
+  padding-top: 0;
   margin-bottom: 2rem;
 }
 
@@ -325,13 +327,14 @@ margin-top: 0;
   .toc-wrapper{
      position: fixed;
     left: 20px;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
     /* top: 5rem; */
-    top: calc(var(--navbar-height));
+    /* top: calc(var(--navbar-height)); */
+    top: 0;
     width: 300px;
-    max-height: 80vh;
+    max-height: 100vh;
     overflow-y: auto;
-    border: 2px solid brown;
+    /* border: 2px solid brown; */
   }
   
   /* Chrome, Edge, Safari */
@@ -369,13 +372,80 @@ height: var(--navbar-height);
 
 
 .navbar {
+/* background-color: var(--text-primary);
+color: var(--bg-primary); */
   height: var(--navbar-height);
-  border: 2px solid red;
+  /* border-bottom: 2px solid red; */
   margin-bottom: 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  position: sticky;
-  top: 0;
-  z-index: 1000; 
+  opacity: 1;
+}
+
+
+.footer {
+  height: var(--navbar-height); /* =footer height*/
+  /* border-top: 2px solid red; */
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@media (min-width: 1426px) {
+.individual-page-footer{
+/* background-color: var(--text-primary);
+color: var(--bg-primary); */
+width: 80%;
+overflow: hidden;
+margin-left: 320px;
+}
+.navbar{
+    width: 80%;
+overflow: hidden;
+margin-left: 320px;
+}
+}
+
+
+
+
+
+
+
+/* small boundry line beofre and after */
+
+/* before */
+
+.short-top {
+  position: relative;
+}
+
+.short-top::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;                 /* sits above the element */
+  width: var(--border-width, 50%);
+  height: var(--border-thickness, 2px);
+  background: var(--border-color, black);
+  transform: translateX(-50%);
+}
+
+/* after */
+
+.short-bottom {
+  position: relative;
+}
+
+.short-bottom::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;                    /* sits below the element */
+  width: var(--border-width, 50%);
+  height: var(--border-thickness, 2px);
+  background: var(--border-color, black);
+  transform: translateX(-50%);
 }

@@ -14,6 +14,9 @@ import { mkdirSync, copyFileSync } from "fs";
 import hljs from 'highlight.js'
 
 
+
+
+
 // using markdown it and various plugins
 
 const md = markdownit({
@@ -47,6 +50,40 @@ md.use(MarkdownItTOC,{
 
 // just copy from respecitive documentations 
 // options in use should be in json
+md.use(function(md) {
+  md.block.ruler.before('paragraph', 'tight', function(state, startLine, endLine, silent) {
+    const start = state.bMarks[startLine] + state.tShift[startLine];
+    const max = state.eMarks[startLine];
+    const marker = ':::tight';
+
+    // Check opening marker
+    if (state.src.slice(start, max).trim() !== marker) return false;
+
+    if (silent) return true;
+
+    let next = startLine + 1;
+
+    // find closing :::
+    while (next < endLine) {
+      const line = state.src.slice(state.bMarks[next] + state.tShift[next], state.eMarks[next]).trim();
+      if (line === ':::') break;
+      next++;
+    }
+
+    const token = state.push('tight_block', '', 0);
+    token.content = state.getLines(startLine + 1, next, 0, true);
+
+    state.line = next + 1;
+    return true;
+  });
+
+  md.renderer.rules.tight_block = function(tokens, idx) {
+    return tokens[idx].content
+      .split(/\n+/)
+      .map(line => `<div class="tight-line">${line}</div>`)
+      .join('');
+  };
+});
 
 
 
@@ -160,8 +197,8 @@ async function createHomePage(outputBase, htmlFiles){
  <body>
    <div class="home-container">
      <header class="home-header">
-       <h1 class="home-title"> Documentation</h1>
-       <p class="home-subtitle">Explore all available documents and guides</p>
+       <h1 class="home-title"> Markdown</h1>
+       <p class="home-subtitle">Convert markdown to static site</p>
      </header>
     
      <div class="home-toc">
@@ -175,6 +212,10 @@ async function createHomePage(outputBase, htmlFiles){
     
      <footer class="home-footer">
        <p>Generated on ${new Date().toLocaleDateString()} • Total documents: ${htmlFiles.length}</p>
+        <button class="toggle-btn" onclick="handleDarkModeToggle()">
+    <span class="sun">☀️</span>
+    <span class="moon">🌙</span>
+  </button>
      </footer>
    </div>
  </body>
@@ -231,20 +272,30 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
    </head>
 
 <body>
-<div class="navbar">
-  <button class="toggle-btn" onclick="handleDarkModeToggle()">
-    <span class="sun">☀️</span>
-    <span class="moon">🌙</span>
-  </button>
+<div class="navbar short-bottom" style="--border-width:80%; --border-color:blue;">
    <a href="/site-output/index.html">Home</a> 
+   <a href ="/site-output/about.html">About</a>
+   <a href="#">Blog</a>
+   <a href="#">Contact</a>
 </div>
 <div class="body-main-container">
 
   ${result}
  </div>
+  <div class="footer individual-page-footer short-top" style="--border-width:80%; --border-color:red;">
+<a href="#">link1</a>
+<a href="#">link2</a>
+<a href="#">link3</a>
+ <button class="toggle-btn" onclick="handleDarkModeToggle()">
+    <span class="sun">☀️</span>
+    <span class="moon">🌙</span>
+  </button>
+ </div>
 </body>
 <script src="${jsRelativePath}"></script>
 </html>`;
+
+
 
   const htmlFileName = file.name.slice(0, -3) + ".html";
   file.name = htmlFileName; // change extension to .html
@@ -306,6 +357,17 @@ async function createJSFile(outputBase) {
 
 
 
+async function createAuxiliaryRoutes(outputBase) {
+     const source = path.join("template", "about.html");
+  const destination = path.join(outputBase,"about.html");
+
+  // if not subfolder exist 
+  mkdirSync(path.dirname(destination), { recursive: true });
+  copyFileSync(source, destination);
+  console.log("Auxiliary Files file copied successfully!");
+  
+}
+
 
 
 export async function renderMarkdownFile( inputFolder="./md-input", inputFileType=".md", outputFolder="site-output", themeName="sunset" ) {
@@ -316,6 +378,7 @@ export async function renderMarkdownFile( inputFolder="./md-input", inputFileTyp
     await createCSSFile(outputFolder, themeName);
     await createFaviconFile(outputFolder);
     await createJSFile(outputFolder);
+    await createAuxiliaryRoutes(outputFolder)
 
     const mdFiles = await getFilesByType(inputFolder, inputFileType);
     const htmlFiles = [];

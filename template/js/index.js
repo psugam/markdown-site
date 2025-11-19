@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // toc head
     const toc=document.getElementsByClassName('table-of-contents')[0];
-
+    // if toc exists if doesnt do nothing
+if(toc){
     const newTOC = document.createElement("h3");
-    newTOC.textContent = "Contents";
+    newTOC.textContent = "CONTENTS";
     newTOC.classList.add("table-of-contents-header");
     toc.before(newTOC);
     newTOC.onclick = handleTocToggle();
@@ -25,6 +26,8 @@ tocWrapper.classList.add("toc-wrapper");
 toc.parentNode.insertBefore(tocWrapper, toc);
 tocWrapper.appendChild(newTOC);
 tocWrapper.appendChild(toc);
+}
+
 
 
 // the page list is default hidden this sis a temp solution
@@ -53,6 +56,8 @@ function handleTocToggle() {
 
     tocHeader.addEventListener('click', () => {
         toc.classList.toggle('hidden');
+     const footer=document.getElementsByClassName('footer')[0];
+     footer.classList.toggle('individual-page-footer');
     });
 }
 // this seems redundant lol. Change
@@ -66,4 +71,50 @@ function handleTocToggle() {
 
 
 
-  
+
+// document.addEventListener('DOMContentLoaded', function (){
+// const tocWrapper= document.getElementsByClassName('toc-wrapper')[0];
+
+// if(!tocWrapper){
+//     console.log("Nada");
+//     const navbar =document.getElementsByClassName('navbar')[0];
+//     console.log(navbar)
+//    navbar.style.color = "blue !important";
+
+    
+// }
+// else{
+//     const navbar =document.getElementsByClassName('navbar')[0];
+//     console.log(navbar)
+// }
+// })
+
+document.addEventListener('DOMContentLoaded', function (){
+const tocWrapper= document.getElementsByClassName('toc-wrapper')[0];
+    const navbar = document.getElementsByClassName('navbar')[0];
+    const footer=document.getElementsByClassName('footer')[0];
+    const individualPageFooter=document.getElementsByClassName('individual-page-footer')[0];
+     const tocHeader = document.querySelector('.table-of-contents-header');
+    const toc = document.querySelector('.table-of-contents');
+if(!tocWrapper){
+    console.log("Nada");
+
+
+    console.log(navbar);
+    console.log(individualPageFooter)
+    navbar.style.width = "100%";
+    navbar.style.marginLeft="0px";
+    navbar.style.marginRight="0px"
+
+    footer.classList.remove('individual-page-footer');
+
+}
+else{
+    const computedHeight = parseFloat(getComputedStyle(tocWrapper).height)
+    const viewportHeight = window.innerHeight;
+if (computedHeight < viewportHeight * 0.9) {
+  footer.classList.remove('individual-page-footer');
+}
+
+}
+})

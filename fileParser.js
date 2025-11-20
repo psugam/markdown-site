@@ -126,7 +126,7 @@ async function getFilesByType(dirPath, ext) {
 
 
 
-// Add this function before renderMarkdownFile()
+// Addding  this function before renderMarkdownFile()
 async function createCSSFile(outputBase, themeName) {
   const cssContent= await readFile(`template/css/${themeName}.css`, "utf-8");
 
@@ -138,6 +138,93 @@ async function createCSSFile(outputBase, themeName) {
   console.log(`CSS file created at: ${cssPath}`);
 }
 
+
+// async function createHomePage(outputBase, htmlFiles){
+//   // Build the table of contents
+//   let tocHTML = '';
+  
+//   // Group files by directory
+//   const filesByDir = {};
+//   htmlFiles.forEach(file => {
+//     const relativePath = path.relative(path.join(outputBase, 'html'), file.fullPath);
+//     const dir = path.dirname(relativePath);
+//     if (!filesByDir[dir]) {
+//       filesByDir[dir] = [];
+//     }
+//     filesByDir[dir].push({
+//       name: file.name,
+//       path: relativePath.replace(/\\/g, '/')
+//     });
+//   });
+  
+//   // Generate nested list
+//   Object.keys(filesByDir).sort().forEach(dir => {
+//     if (dir !== '.') {
+
+//       tocHTML += `<li class="home-toc-item"><strong style="padding: 18px 30px; display: block; color: #2d3748;">${dir.charAt(0).toUpperCase()+dir.slice(1)}</strong>`;
+//       tocHTML += '<ul class="home-toc-list home-toc-nested">';
+//     }
+    
+//     filesByDir[dir].sort((a, b) => a.name.localeCompare(b.name)).forEach(file => {
+//       file.name=file.name.replace(".html", "");
+//       file.name=file.name.charAt(0).toUpperCase() + file.name.slice(1);
+//       tocHTML += `<li class="home-toc-item"><a href="html/${file.path}" class="home-toc-link">${file.name}</a></li>`;
+//     });
+    
+//     if (dir !== '.') {
+//       tocHTML += '</ul></li>';
+//     }
+//   });
+
+//   const homePageContent = `<!DOCTYPE html>
+//  <html lang="en">
+//  <head>
+//    <meta charset="UTF-8">
+//    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//    <title>Markdown Site</title>
+//    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+//    <link rel="stylesheet" href="style/styles.css">
+//     <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+//     <style>
+//     body{
+//     border:none;
+//     }
+//     h1, h2, h3, h4, h5, h6{
+//     text-decoration:none;
+//     }
+//     </style>
+//  </head>
+//  <body>
+//    <div class="home-container">
+//      <header class="home-header">
+//        <h1 class="home-title"> Markdown</h1>
+//        <p class="home-subtitle">Convert markdown to static site</p>
+//      </header>
+    
+//      <div class="home-toc">
+//        <div class="home-toc-header">
+//          <h2 class="home-toc-title">Table of Contents</h2>
+//        </div>
+//        <ul class="home-toc-list">
+//          ${tocHTML}
+//        </ul>
+//     </div>
+    
+//      <footer class="home-footer">
+//        <p>Generated on ${new Date().toLocaleDateString()} • Total documents: ${htmlFiles.length}</p>
+//         <button class="toggle-btn" onclick="handleDarkModeToggle()">
+//     <span class="sun">☀️</span>
+//     <span class="moon">🌙</span>
+//   </button>
+//      </footer>
+//    </div>
+//  </body>
+//  </html>`;
+
+//   const homePagePath = path.join(outputBase, "index.html");
+//   await writeFile(homePagePath, homePageContent, "utf-8");
+//   console.log(`Homepage created at: ${homePagePath}`);
+// }
 
 async function createHomePage(outputBase, htmlFiles){
   // Build the table of contents
@@ -160,7 +247,6 @@ async function createHomePage(outputBase, htmlFiles){
   // Generate nested list
   Object.keys(filesByDir).sort().forEach(dir => {
     if (dir !== '.') {
-
       tocHTML += `<li class="home-toc-item"><strong style="padding: 18px 30px; display: block; color: #2d3748;">${dir.charAt(0).toUpperCase()+dir.slice(1)}</strong>`;
       tocHTML += '<ul class="home-toc-list home-toc-nested">';
     }
@@ -176,50 +262,15 @@ async function createHomePage(outputBase, htmlFiles){
     }
   });
 
-  const homePageContent = `<!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Markdown Site</title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-   <link rel="stylesheet" href="style/styles.css">
-    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
-    <style>
-    body{
-    border:none;
-    }
-    h1, h2, h3, h4, h5, h6{
-    text-decoration:none;
-    }
-    </style>
- </head>
- <body>
-   <div class="home-container">
-     <header class="home-header">
-       <h1 class="home-title"> Markdown</h1>
-       <p class="home-subtitle">Convert markdown to static site</p>
-     </header>
-    
-     <div class="home-toc">
-       <div class="home-toc-header">
-         <h2 class="home-toc-title">Table of Contents</h2>
-       </div>
-       <ul class="home-toc-list">
-         ${tocHTML}
-       </ul>
-    </div>
-    
-     <footer class="home-footer">
-       <p>Generated on ${new Date().toLocaleDateString()} • Total documents: ${htmlFiles.length}</p>
-        <button class="toggle-btn" onclick="handleDarkModeToggle()">
-    <span class="sun">☀️</span>
-    <span class="moon">🌙</span>
-  </button>
-     </footer>
-   </div>
- </body>
- </html>`;
+  // Read template from file
+  const templatePath = path.join('template', 'index.html');
+  let homePageContent = await readFile(templatePath, 'utf-8');
+  
+  // Replace placeholders with dynamic content
+  homePageContent = homePageContent
+    .replace('{{TOC_HTML}}', tocHTML)
+    .replace('{{GENERATION_DATE}}', new Date().toLocaleDateString())
+    .replace('{{TOTAL_DOCUMENTS}}', htmlFiles.length);
 
   const homePagePath = path.join(outputBase, "index.html");
   await writeFile(homePagePath, homePageContent, "utf-8");

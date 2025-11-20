@@ -1,40 +1,44 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Markdown Site</title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
-   <link rel="stylesheet" href="style/styles.css">
-    <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
-    <style>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Site</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="stylesheet" href="style/styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+  <style>
     body{
-    border:none;
+      border:none;
     }
     h1, h2, h3, h4, h5, h6{
-    text-decoration:none;
+      text-decoration:none;
     }
-    </style>
- </head>
- <body>
-   <div class="home-container">
-     <header class="home-header">
-       <h1 class="home-title"> Documentation</h1>
-       <p class="home-subtitle">Explore all available documents and guides</p>
-     </header>
-    
-     <div class="home-toc">
-       <div class="home-toc-header">
-         <h2 class="home-toc-title">Table of Contents</h2>
-       </div>
-       <ul class="home-toc-list">
-         ${tocHTML}
-       </ul>
+  </style>
+</head>
+<body>
+  <div class="home-container">
+    <header class="home-header">
+      <h1 class="home-title"> Markdown</h1>
+      <p class="home-subtitle">Convert markdown to static site</p>
+    </header>
+   
+    <div class="home-toc">
+      <div class="home-toc-header">
+        <h2 class="home-toc-title">Table of Contents</h2>
+      </div>
+      <ul class="home-toc-list">
+        {{TOC_HTML}}
+      </ul>
     </div>
-    
-     <footer class="home-footer">
-       <p>Generated on ${new Date().toLocaleDateString()} • Total documents: ${htmlFiles.length}</p>
-     </footer>
-   </div>
- </body>
- </html>
+   
+    <footer class="home-footer">
+      <p>Generated on {{GENERATION_DATE}} • Total documents: {{TOTAL_DOCUMENTS}}</p>
+      <button class="toggle-btn" onclick="handleDarkModeToggle()">
+        <span class="sun">☀️</span>
+        <span class="moon">🌙</span>
+      </button>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="style/styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon/favicon.ico">
+  <style>
+    body {
+      border: none;
+    }
+
+    .contact-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .contact-title {
+      font-size: 3em;
+      margin: 0 0 15px 0;
+      font-weight: 700;
+      color: var(--heading);
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .contact-subtitle {
+      font-size: 1.2em;
+      color: var(--text-muted);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .contact-form {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 4px 20px var(--shadow);
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.95em;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1em;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    .form-textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-button {
+      width: 100%;
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .form-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--shadow);
+    }
+
+    .form-button:active {
+      transform: translateY(0);
+    }
+
+    .contact-info {
+      margin-top: 50px;
+      text-align: center;
+      padding: 30px;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .contact-info h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: var(--heading);
+      font-size: 1.5em;
+    }
+
+    .contact-info p {
+      color: var(--text-secondary);
+      margin: 10px 0;
+      font-size: 1.05em;
+    }
+
+    .contact-info a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .contact-info a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+
+    .required {
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .contact-form {
+        padding: 25px;
+      }
+
+      .contact-title {
+        font-size: 2.2em;
+      }
+
+      .contact-subtitle {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+<div class="navbar short-bottom" style="--border-width:80%; --border-color:blue;">
+   <a href="/site-output/index.html">Home</a> 
+   <a href ="/site-output/about.html">About</a>
+   <a href="#">Blog</a>
+   <a href="/site-output/contact.html">Contact</a>
+</div>
+
+  <!-- Main Content -->
+  <div class="contact-container">
+    <header class="contact-header">
+      <h1 class="contact-title">Get In Touch</h1>
+      <p class="contact-subtitle">We'd love to hear from you. Send us a message!</p>
+    </header>
+
+    <div class="contact-form">
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name" class="form-label">Name <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            class="form-input" 
+            required 
+            placeholder="Your name"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email <span class="required">*</span></label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            class="form-input" 
+            required 
+            placeholder="your.email@example.com"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="subject" class="form-label">Subject <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="subject" 
+            name="subject" 
+            class="form-input" 
+            required 
+            placeholder="What's this about?"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="message" class="form-label">Message <span class="required">*</span></label>
+          <textarea 
+            id="message" 
+            name="message" 
+            class="form-textarea" 
+            required 
+            placeholder="Tell us more..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="form-button">Send Message</button>
+      </form>
+    </div>
+
+    <div class="contact-info">
+      <h3>Other Ways to Reach Us</h3>
+      <p><strong>Email:</strong> <a href="mailto:contact@example.com">contact@example.com</a></p>
+      <p><strong>Phone:</strong> <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+      <p><strong>Address:</strong> 123 Main Street, City, Country</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+ <div class="footer individual-page-footer short-top" style="--border-width:80%; --border-color:red;">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Support</a>
+    <button class="toggle-btn" onclick="handleDarkModeToggle()">
+      <span class="sun">☀️</span>
+      <span class="moon">🌙</span>
+    </button>
+  </div>
+  <script src="js/index.js"></script>
+  <script>
+    const body = document.querySelector('body');
+
+    // Load theme on page load
+    document.addEventListener('DOMContentLoaded', function () {
+      const theme = sessionStorage.getItem('theme');
+      if (theme === 'dark') {
+        body.classList.add('dark');
+      } else {
+        body.classList.add('light');
+      }
+    });
+
+    // Dark mode toggle
+    function handleDarkModeToggle() {
+      if (body.classList.contains('dark')) {
+        body.classList.remove('dark');
+        body.classList.add('light');
+        sessionStorage.setItem('theme', 'light');
+      } else {
+        body.classList.remove('light');
+        body.classList.add('dark');
+        sessionStorage.setItem('theme', 'dark');
+      }
+    }
+
+    // Handle form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      // Construct mailto link
+      const mailtoLink = `mailto:contact@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+      )}`;
+      
+      // Open default email client
+      window.location.href = mailtoLink;
+      
+      // Optional: Reset form after a short delay
+      setTimeout(() => {
+        this.reset();
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>

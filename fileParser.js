@@ -327,7 +327,7 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
    <a href="/site-output/index.html">Home</a> 
    <a href ="/site-output/about.html">About</a>
    <a href="#">Blog</a>
-   <a href="#">Contact</a>
+   <a href="/site-output/contact.html">Contact</a>
 </div>
 <div class="body-main-container">
 
@@ -409,12 +409,16 @@ async function createJSFile(outputBase) {
 
 
 async function createAuxiliaryRoutes(outputBase) {
-     const source = path.join("template", "about.html");
-  const destination = path.join(outputBase,"about.html");
+  const auxiliaryFiles=['about', 'contact']
+  auxiliaryFiles.forEach(auxiliaryFile => {
+  const source = path.join("template", `${auxiliaryFile}.html`);
+  const destination = path.join(outputBase,`${auxiliaryFile}.html`);
 
   // if not subfolder exist 
   mkdirSync(path.dirname(destination), { recursive: true });
   copyFileSync(source, destination);
+  })
+
   console.log("Auxiliary Files file copied successfully!");
   
 }

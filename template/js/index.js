@@ -16,7 +16,7 @@ if(toc){
     newTOC.textContent = "CONTENTS";
     newTOC.classList.add("table-of-contents-header");
     toc.before(newTOC);
-    newTOC.onclick = handleTocToggle();
+    // newTOC.onclick = handleTocToggle();
     // not including () here was causing twice click issue
 
 
@@ -50,16 +50,16 @@ function handleDarkModeToggle() {
     }
 }
 
-function handleTocToggle() {
-    const tocHeader = document.querySelector('.table-of-contents-header');
-    const toc = document.querySelector('.table-of-contents');
+// function handleTocToggle() {
+//     const tocHeader = document.querySelector('.table-of-contents-header');
+//     const toc = document.querySelector('.table-of-contents');
 
-    tocHeader.addEventListener('click', () => {
-        toc.classList.toggle('hidden');
-     const footer=document.getElementsByClassName('footer')[0];
-     footer.classList.toggle('individual-page-footer');
-    });
-}
+//     tocHeader.addEventListener('click', () => {
+//         toc.classList.toggle('hidden');
+//      const footer=document.getElementsByClassName('footer')[0];
+//      footer.classList.toggle('individual-page-footer');
+//     });
+// }
 // this seems redundant lol. Change
 
 
@@ -97,24 +97,36 @@ const tocWrapper= document.getElementsByClassName('toc-wrapper')[0];
      const tocHeader = document.querySelector('.table-of-contents-header');
     const toc = document.querySelector('.table-of-contents');
 if(!tocWrapper){
-    console.log("Nada");
+    // console.log("Nada");
 
 
-    console.log(navbar);
-    console.log(individualPageFooter)
+    // console.log(navbar);
+    // console.log(individualPageFooter)
     navbar.style.width = "100%";
     navbar.style.marginLeft="0px";
     navbar.style.marginRight="0px"
-
     footer.classList.remove('individual-page-footer');
-
 }
 else{
     const computedHeight = parseFloat(getComputedStyle(tocWrapper).height)
     const viewportHeight = window.innerHeight;
-if (computedHeight < viewportHeight * 0.9) {
-  footer.classList.remove('individual-page-footer');
+if (computedHeight > viewportHeight * 0.9) {
+//   footer.classList.remove('individual-page-footer');
+ tocHeader.addEventListener('click', () => {
+        toc.classList.toggle('hidden');
+     footer.classList.toggle('individual-page-footer');
+    });
+}
+else{
+     footer.classList.remove('individual-page-footer');
+     tocHeader.addEventListener('click', () => {
+        toc.classList.toggle('hidden');
+    
+    });
 }
 
 }
 })
+
+
+

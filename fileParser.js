@@ -325,9 +325,22 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
 
 <body>
   <div class="header-name">
+  <a href ="/site-output/index.html">
     ${siteTitle}
+    </a>
   </div>
 <div class="navbar short-bottom" style="--border-width:80%; --border-color:blue;">
+   <a href="/site-output/index.html">Home</a> 
+   <a href ="/site-output/about.html">About</a>
+   <a href="#">Blog</a>
+   <a href="/site-output/contact.html">Contact</a>
+</div>
+<div class="hamburger" id="hamburger">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+<div class="navbar-links" id="navbarLinks">
    <a href="/site-output/index.html">Home</a> 
    <a href ="/site-output/about.html">About</a>
    <a href="#">Blog</a>

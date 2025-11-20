@@ -97,8 +97,17 @@ const tocWrapper= document.getElementsByClassName('toc-wrapper')[0];
 
 const bodyMainContainer=document.getElementsByClassName('body-main-container')[0];
 
+const headerName = document.querySelector('.header-name');
+const headerHeight = headerName.getBoundingClientRect().height;
+    const navbarHeight = navbar.getBoundingClientRect().height;
+    const totalHeight=navbarHeight+headerHeight;
+    let totalHeightString=totalHeight+"px";
+// console.log(headerHeight, navbarHeight, totalHeight);
+// console.log(totalHeightString, typeof(totalHeightString));
+
     const tocHeader = document.querySelector('.table-of-contents-header');
     const toc = document.querySelector('.table-of-contents');
+
 if(!tocWrapper){
     // console.log("Nada");
 
@@ -115,21 +124,55 @@ else{
     const viewportHeight = window.innerHeight;
 if (computedHeight > viewportHeight * 0.9) {
 //   footer.classList.remove('individual-page-footer');
+// collides i.e is large 
  tocHeader.addEventListener('click', () => {
         toc.classList.toggle('hidden');
      footer.classList.toggle('individual-page-footer');
+     if(toc.classList.contains('hidden')){
+console.log("Hiddden now");
+        tocHeader.style.height=totalHeightString;
+     }
     });
 }
 else{
      footer.classList.remove('individual-page-footer');
      tocHeader.addEventListener('click', () => {
         toc.classList.toggle('hidden');
+        if(toc.classList.contains('hidden')){
+            tocHeader.style.height=totalHeightString;
+        }
     
     });
 }
 
 }
+
+
+const hamburger = document.getElementById("hamburger");
+const navbarLinks = document.getElementById("navbarLinks");
+
+hamburger.addEventListener("click", function (e) {
+  e.stopPropagation(); // IMPORTANT
+  hamburger.classList.toggle("active");
+  navbarLinks.classList.toggle("open");
+  navbarLinks.style.marginTop = "30px";
+});
+
+// clicking inside menu should not close it
+navbarLinks.addEventListener("click", function (e) {
+  e.stopPropagation();
+});
+
+// clicking anywhere else closes it
+body.addEventListener("click", function () {
+  hamburger.classList.remove("active");
+  navbarLinks.classList.remove("open");
+});
+
+
 })
+
+
 
 
 

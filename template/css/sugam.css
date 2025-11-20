@@ -82,7 +82,7 @@ h1 {
 }
 h2 { 
   font-size: 2rem; 
-  border-bottom: 1px solid var(--border); 
+  /* border-bottom: 1px solid var(--border);  */
   padding-bottom: 0.4rem; 
 }
 h3 { 
@@ -371,6 +371,7 @@ body:not(.dark) .moon { display: none; }
     display: flex;
     align-items: center;
     padding-left: 1rem;
+    margin-bottom: 0;
   }
 
   .toc-wrapper{
@@ -542,4 +543,122 @@ body:not(.dark) .moon { display: none; }
   text-align: center;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   height: var(--navbar-height);
+}
+
+.header-name a{
+  color: inherit;
+}
+
+
+
+
+
+
+
+
+/* hamburger menu for small */
+
+/* Hamburger (hidden on large screens) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  width: 30px;
+  height: 22px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: var(--text-primary);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+/* Navigation links container for mobile */
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+
+@media (min-width: 768px){
+
+  .hamburger{
+    display: none;
+  }
+  .navbar-links{
+    display: none;
+  }
+}
+
+/* Mobile behaviour */
+@media (max-width: 768px) {
+
+  .navbar{
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+  }
+
+  .navbar-links {
+    position: absolute;
+    top: calc(1.5 * var(--navbar-height));
+    left: 0;
+    width: 100%;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.5rem;
+    gap: 0.75rem;
+    display: none; /* hidden by default */
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  /* Hamburger animation */
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+}
+
+
+
+/* for body scroll large device */
+
+@media (min-width: 768px){
+
+  body::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  body::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background: var(--border-dark);
+    border-radius: 10px;
+  }
+
+  body::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+  }
 }

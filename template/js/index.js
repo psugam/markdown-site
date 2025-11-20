@@ -93,8 +93,11 @@ document.addEventListener('DOMContentLoaded', function (){
 const tocWrapper= document.getElementsByClassName('toc-wrapper')[0];
     const navbar = document.getElementsByClassName('navbar')[0];
     const footer=document.getElementsByClassName('footer')[0];
-    const individualPageFooter=document.getElementsByClassName('individual-page-footer')[0];
-     const tocHeader = document.querySelector('.table-of-contents-header');
+    // const individualPageFooter=document.getElementsByClassName('individual-page-footer')[0];
+
+const bodyMainContainer=document.getElementsByClassName('body-main-container')[0];
+
+    const tocHeader = document.querySelector('.table-of-contents-header');
     const toc = document.querySelector('.table-of-contents');
 if(!tocWrapper){
     // console.log("Nada");

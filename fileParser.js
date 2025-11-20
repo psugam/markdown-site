@@ -226,7 +226,7 @@ async function createCSSFile(outputBase, themeName) {
 //   console.log(`Homepage created at: ${homePagePath}`);
 // }
 
-async function createHomePage(outputBase, htmlFiles){
+async function createHomePage(outputBase, htmlFiles, siteTitle){
   // Build the table of contents
   let tocHTML = '';
   
@@ -270,14 +270,15 @@ async function createHomePage(outputBase, htmlFiles){
   homePageContent = homePageContent
     .replace('{{TOC_HTML}}', tocHTML)
     .replace('{{GENERATION_DATE}}', new Date().toLocaleDateString())
-    .replace('{{TOTAL_DOCUMENTS}}', htmlFiles.length);
+    .replace('{{TOTAL_DOCUMENTS}}', htmlFiles.length)
+    .replace('{{siteTitle}}', siteTitle);
 
   const homePagePath = path.join(outputBase, "index.html");
   await writeFile(homePagePath, homePageContent, "utf-8");
   console.log(`Homepage created at: ${homePagePath}`);
 }
 
-async function createIndividualPage(file, inputFolder, outputFilePath, markdownContent, allMdFiles) {
+async function createIndividualPage(file, inputFolder, outputFilePath, markdownContent, allMdFiles, siteTitle) {
   // Render markdown to HTML
   const result = md.render(markdownContent);
 
@@ -323,6 +324,9 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
    </head>
 
 <body>
+  <div class="header-name">
+    ${siteTitle}
+  </div>
 <div class="navbar short-bottom" style="--border-width:80%; --border-color:blue;">
    <a href="/site-output/index.html">Home</a> 
    <a href ="/site-output/about.html">About</a>
@@ -333,15 +337,15 @@ async function createIndividualPage(file, inputFolder, outputFilePath, markdownC
 
   ${result}
  </div>
-  <div class="footer individual-page-footer short-top" style="--border-width:80%; --border-color:red;">
-<a href="#">link1</a>
-<a href="#">link2</a>
-<a href="#">link3</a>
- <button class="toggle-btn" onclick="handleDarkModeToggle()">
-    <span class="sun">☀️</span>
-    <span class="moon">🌙</span>
-  </button>
- </div>
+   <div class="footer individual-page-footer short-top" style="--border-width:80%; --border-color:red;">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Support</a>
+    <button class="toggle-btn" onclick="handleDarkModeToggle()">
+      <span class="sun">☀️</span>
+      <span class="moon">🌙</span>
+    </button>
+  </div>
 </body>
 <script src="${jsRelativePath}"></script>
 </html>`;
@@ -408,24 +412,32 @@ async function createJSFile(outputBase) {
 
 
 
-async function createAuxiliaryRoutes(outputBase) {
-  const auxiliaryFiles=['about', 'contact']
-  auxiliaryFiles.forEach(auxiliaryFile => {
-  const source = path.join("template", `${auxiliaryFile}.html`);
-  const destination = path.join(outputBase,`${auxiliaryFile}.html`);
-
-  // if not subfolder exist 
-  mkdirSync(path.dirname(destination), { recursive: true });
-  copyFileSync(source, destination);
-  })
-
-  console.log("Auxiliary Files file copied successfully!");
+async function createAuxiliaryRoutes(outputBase, siteTitle) {
+  const auxiliaryFiles = ['about', 'contact'];
   
+  // or forEach is easier ?
+  for (const auxiliaryFile of auxiliaryFiles) {
+    const source = path.join("template", `${auxiliaryFile}.html`);
+    const destination = path.join(outputBase, `${auxiliaryFile}.html`);
+
+    // Read the file content
+    let content = await readFile(source, 'utf8');
+    
+    // Replace {{siteTitle}} with the actual site title
+    content = content.replace(/\{\{siteTitle\}\}/g, siteTitle);
+
+    // Create directory if it doesn't exist
+    mkdirSync(path.dirname(destination), { recursive: true });
+    
+    // Write the modified content to destination
+    writeFile(destination, content, 'utf8');
+  }
+
+  console.log("Auxiliary Files copied and processed successfully!");
 }
 
 
-
-export async function renderMarkdownFile( inputFolder="./md-input", inputFileType=".md", outputFolder="site-output", themeName="sunset" ) {
+export async function renderMarkdownFile( inputFolder="./md-input", inputFileType=".md", outputFolder="site-output", themeName="sunset", siteTite="HELLO" ) {
   try {
     // Read the markdown file
     const outputFilePath = `${outputFolder}/html/`;
@@ -433,7 +445,7 @@ export async function renderMarkdownFile( inputFolder="./md-input", inputFileTyp
     await createCSSFile(outputFolder, themeName);
     await createFaviconFile(outputFolder);
     await createJSFile(outputFolder);
-    await createAuxiliaryRoutes(outputFolder)
+    await createAuxiliaryRoutes(outputFolder, siteTite)
 
     const mdFiles = await getFilesByType(inputFolder, inputFileType);
     const htmlFiles = [];
@@ -442,11 +454,11 @@ export async function renderMarkdownFile( inputFolder="./md-input", inputFileTyp
       console.log("File:", file.name, "Path:", file.fullPath);
       const markdownContent = await readFile(file.fullPath, "utf-8");
       
-      const htmlFile = await createIndividualPage(file, inputFolder, outputFilePath, markdownContent, mdFiles);
+      const htmlFile = await createIndividualPage(file, inputFolder, outputFilePath, markdownContent, mdFiles, siteTite);
       htmlFiles.push(htmlFile);
     }
 
-    await createHomePage(outputFolder, htmlFiles);
+    await createHomePage(outputFolder, htmlFiles, siteTite);
   } catch (error) {
     console.error("Error reading file:", error);
   }

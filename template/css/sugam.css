@@ -370,6 +370,7 @@ body:not(.dark) .moon { display: none; }
     height: var(--navbar-height);
     display: flex;
     align-items: center;
+    padding-left: 1rem;
   }
 
   .toc-wrapper{
@@ -530,4 +531,15 @@ body:not(.dark) .moon { display: none; }
 .tight-line {
   margin: 0; 
   padding: 0; 
+}
+
+/* top header name */
+
+.header-name{
+  width: 100%;
+  font-size: 3rem;
+  font-weight: bolder !important;
+  text-align: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  height: var(--navbar-height);
 }
